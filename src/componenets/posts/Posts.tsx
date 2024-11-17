@@ -3,6 +3,8 @@ import {fetchPosts} from "./fetches.ts";
 import toastHelper from "../utils/toastHelper.tsx";
 import {CardType} from "../../types.tsx";
 import CardGallery from "../utils/CardGallery.tsx";
+import SubpageHeader from "../utils/SubpageHeader.tsx";
+import PostsButtons from "./PostsButtons.tsx";
 
 
 export function Posts() {
@@ -16,7 +18,8 @@ export function Posts() {
 
   return (
     <>
-      <h1 className="m-8 text-2xl align-middle flex-auto ">Ogłoszenia</h1>
+      <SubpageHeader name="Ogłoszenia" />
+      <PostsButtons />
       <CardGallery cardsInfo={posts} />
     </>
 

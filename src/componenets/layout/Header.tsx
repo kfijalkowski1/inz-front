@@ -1,13 +1,14 @@
-import { useState } from 'react';
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'flowbite-react';
+import HouseIcon from "../utils/icons/HouseIcon.tsx";
+import {useLocation} from "react-router-dom";
 
 function Header(): JSX.Element {
-  const [activePath, setActivePath] = useState('/');
+  const location = useLocation();
 
   return (
-    <Navbar fluid rounded>
+    <Navbar fluid rounded color="cyan">
       <NavbarBrand href="#">
-        <img src="../../assets/house.svg" className="mr-3 h-6 sm:h-9" alt="House Logo" />
+        <HouseIcon />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Administracja osiedla
         </span>
@@ -16,15 +17,13 @@ function Header(): JSX.Element {
       <NavbarCollapse>
         <NavbarLink
           href="/"
-          active={activePath === '/'}
-          onClick={() => setActivePath('/')}
+          active={location.pathname === "/"}
         >
           Strona główna
         </NavbarLink>
         <NavbarLink
-          href="/ogloszenia"
-          active={activePath === '/ogloszenia'}
-          onClick={() => setActivePath('/ogloszenia')}
+          href="/posts"
+          active={location.pathname.startsWith("/posts")}
         >
           Ogłoszenia
         </NavbarLink>

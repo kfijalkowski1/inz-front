@@ -6,7 +6,6 @@ interface CardGalleryProps {
 }
 
 export function CardGallery(cardsProps: CardGalleryProps) {
-  console.log("Received cardsInfo:", cardsProps);
   return (
     <>
       <div className="flex flex-wrap justify-center w-full gap-4">
