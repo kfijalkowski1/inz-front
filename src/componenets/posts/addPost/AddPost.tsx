@@ -3,11 +3,13 @@
 import {Button, Label, Textarea, TextInput} from "flowbite-react";
 import { useState } from "react";
 import toastHelper from "../../utils/toastHelper";
-import { addPost } from "../fetches"; // Ensure the correct path to `addPost`
+import { addPost } from "../fetches";
+import {useNavigate} from "react-router-dom"; // Ensure the correct path to `addPost`
 
 export default function AddPost(): JSX.Element {
   const [postTitle, setPostTitle] = useState("");
   const [postText, setPostText] = useState("");
+  let navigate = useNavigate();
 
   async function handleSubmit(event: React.FormEvent): Promise<void> {
     event.preventDefault(); // Prevent default form submission
@@ -22,6 +24,7 @@ export default function AddPost(): JSX.Element {
       // Clear inputs
       setPostTitle("");
       setPostText("");
+      navigate("/posts");
     } catch (error) {
       // Show error toast
       toastHelper.error("Wystąpił błąd :(. Spróbuj jeszcze raz");
