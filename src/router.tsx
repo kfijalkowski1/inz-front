@@ -6,6 +6,7 @@ import LoginComponent from "./componenets/register_login/LoginComponent.tsx";
 import Home from "./componenets/home/HomePage.tsx";
 import {LogoutComponent} from "./componenets/register_login/LogoutComponent.tsx";
 import Post from "./componenets/posts/Post.tsx";
+import EditPost from "./componenets/posts/EditPost.tsx";
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
 			{
 				path: "posts/:postId",
 				element: <Post/>,
+			},
+			{
+				path: "posts/:postId/edit",
+				element: <EditPost/>,
 			},
 			{
 				path: "login",

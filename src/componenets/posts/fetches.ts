@@ -37,8 +37,22 @@ export const addPost = async (data: {title: string, description: string}): Promi
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    throw new Error("HTTP error " + response.status); // TODO error boundry?
+    throw new Error("HTTP error " + response.status);
   }
+}
+
+export const editPost = async (id: string, data: {title: string, description: string}): Promise<void> => {
+    const response = await fetch(`${API_ADDR}posts/edit/${id}`, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+    }
 }
 
 export const userPosts = async (): Promise<CardType[]> => {
