@@ -1,6 +1,7 @@
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'flowbite-react';
 import HouseIcon from "../utils/icons/HouseIcon.tsx";
 import {useLocation} from "react-router-dom";
+import {isUserLoggedIn} from "../register_login/handle_cred.ts";
 
 function Header(): JSX.Element {
   const location = useLocation();
@@ -27,6 +28,18 @@ function Header(): JSX.Element {
         >
           Ogłoszenia
         </NavbarLink>
+          {isUserLoggedIn() ? (
+          <NavbarLink
+              href="/logout"
+              active={location.pathname === "/logout"}
+          >Wyloguj się
+          </NavbarLink>
+         ) : (
+          <NavbarLink
+              href="/login"
+              active={location.pathname === "/login"}
+          > Login </NavbarLink>
+          )}
       </NavbarCollapse>
     </Navbar>
   );

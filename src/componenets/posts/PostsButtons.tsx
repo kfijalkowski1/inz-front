@@ -12,7 +12,6 @@ export function PostsButtons() {
   return (
     <div className="flex justify-center gap-4 m-8">
       <MyCallButton onClick={handleSubmit} text={"Dodaj ogłoszenie"}/>
-      <MyCallButton onClick={handleSubmit} text={"Moje ogłoszenia"}/>
     </div>
     )
 }

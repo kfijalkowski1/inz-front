@@ -2,6 +2,10 @@ import {createBrowserRouter} from 'react-router-dom';
 import Layout from "./componenets/layout/Layout.tsx";
 import Posts from "./componenets/posts/Posts.tsx";
 import AddPost from "./componenets/posts/addPost/AddPost.tsx";
+import LoginComponent from "./componenets/register_login/LoginComponent.tsx";
+import Home from "./componenets/home/HomePage.tsx";
+import {LogoutComponent} from "./componenets/register_login/LogoutComponent.tsx";
+import Post from "./componenets/posts/Post.tsx";
 
 
 const router = createBrowserRouter([
@@ -11,7 +15,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "",
-				element: <Posts/>,
+				element: <Home/>,
 			},
 			{
 				path: "posts",
@@ -20,6 +24,18 @@ const router = createBrowserRouter([
 			{
 				path: "posts/add",
 				element: <AddPost/>,
+			},
+			{
+				path: "posts/:postId",
+				element: <Post/>,
+			},
+			{
+				path: "login",
+				element: <LoginComponent/>,
+			},
+			{
+				path: "logout",
+				element: <LogoutComponent/>,
 			}
 		]
 	},

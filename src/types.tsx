@@ -5,4 +5,6 @@ export type CardType = {
     title: string;
     description: string;
     created_at: string;
+    author_name: string;
+    author_id: string;
 }
