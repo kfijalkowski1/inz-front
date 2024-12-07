@@ -2,9 +2,16 @@ import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'f
 import HouseIcon from "../utils/icons/HouseIcon.tsx";
 import {useLocation} from "react-router-dom";
 import {isUserLoggedIn} from "../register_login/handle_cred.ts";
+import {useEffect, useState} from "react";
 
 function Header(): JSX.Element {
   const location = useLocation();
+  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
+    useEffect(() => {
+        isUserLoggedIn().then((value) => {
+            setUserLoggedIn(value);
+        });
+    }, []);
 
   return (
     <Navbar fluid rounded color="cyan">
@@ -28,7 +35,7 @@ function Header(): JSX.Element {
         >
           Ogłoszenia
         </NavbarLink>
-          {isUserLoggedIn() ? (
+          {userLoggedIn ? (
           <NavbarLink
               href="/logout"
               active={location.pathname === "/logout"}

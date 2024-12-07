@@ -41,7 +41,7 @@ export const addPost = async (data: {title: string, description: string}): Promi
   }
 }
 
-export const editPost = async (id: string, data: {title: string, description: string}): Promise<void> => {
+export const editPost = async (id: string | null, data: {title: string, description: string}): Promise<void> => {
     const response = await fetch(`${API_ADDR}posts/edit/${id}`, {
         method: 'POST',
         headers: {

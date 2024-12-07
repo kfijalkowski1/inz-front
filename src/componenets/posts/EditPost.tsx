@@ -18,7 +18,7 @@ export default function EditPost(): JSX.Element {
                 title: postTitle,
                 description: postText,
             };
-            await editPost(postId, data);
+            await editPost(postId!, data);
             toastHelper.success("Post zmieniony pomyślnie!");
 
             // Clear inputs

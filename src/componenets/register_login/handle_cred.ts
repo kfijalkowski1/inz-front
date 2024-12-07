@@ -1,5 +1,4 @@
 import {API_ADDR} from "../utils/consts.ts";
-import {getSecureRequestOptions} from "../utils/requstsOptions.ts";
 
 export const loginUser = async (username: string, password: string) => {
     const requestOptions = {
@@ -19,7 +18,7 @@ export const loginUser = async (username: string, password: string) => {
         throw new Error("Niepoprawne dane logowania");
     }
     if (!response.ok) {
-        throw new Error("Nie udało się zalogować, spróbuj ponownie"); // TODO error boundry?
+        throw new Error("Nie udało się zalogować, spróbuj ponownie");
     }
     const data = await response.json();
     localStorage.setItem("accessToken", data.access_token);
@@ -44,8 +43,19 @@ export const register =
     await loginUser(username, password);
 }
 
-export function isUserLoggedIn(): boolean {
-    return !!localStorage.getItem("accessToken");
+export const isUserLoggedIn= async(): Promise<boolean> => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+        return false;
+    }
+    // check if token valid
+    try {
+        await getUserId();
+        return true;
+    } catch (error) {
+        localStorage.removeItem("accessToken"); // remove invalid token
+        return false;
+    }
 }
 
 export function logoutUser(): void {
@@ -53,7 +63,14 @@ export function logoutUser(): void {
 }
 
 export async function getUserId(): Promise<string> {
-    const response = await fetch(`${API_ADDR}security/users/me`, getSecureRequestOptions);
+    const fetchOptions = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+        }
+    }
+    const response = await fetch(`${API_ADDR}security/users/me`, fetchOptions);
     if (!response.ok) {
         throw new Error("HTTP error " + response.status);
     }
