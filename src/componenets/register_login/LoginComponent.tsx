@@ -1,9 +1,10 @@
 
-import { Button, Card, Label, TextInput, ToggleSwitch } from "flowbite-react";
-import { useState } from "react";
-import {register, loginUser} from "./handle_cred.ts";
+import {Button, Card, Dropdown, Label, TextInput, ToggleSwitch} from "flowbite-react";
+import {useEffect, useState} from "react";
+import {register, loginUser, getAllEstates} from "./handle_cred.ts";
 import toastHelper from "../utils/toastHelper.tsx";
 import {useNavigate} from "react-router-dom";
+import {EstateType} from "../../types.tsx";
 
 
 
@@ -13,12 +14,24 @@ export function LoginComponent() {
     const [surname, setSurname] = useState("");
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [allEstates, setAllEstates] = useState<EstateType[]>();
+    const [estate, setEstate] = useState<EstateType>();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        getAllEstates().then(data => setAllEstates(data)).catch((_) => {
+            toastHelper.error('Wystąpił błąd :(. Spróbuj jeszcze raz')
+        });
+    }, []);
 
     async function submitFunc(event: React.FormEvent): Promise<void> {
         event.preventDefault();
+        if (estate == null && isRegistering) {
+            toastHelper.error("Wybierz spółdzielnie");
+            return;
+        }
         try {
-            isRegistering ? await register(name, surname, login, password) : await loginUser(login, password);
+            isRegistering ? await register(name, surname, login, password, estate!) : await loginUser(login, password);
             const actionName = isRegistering ? "Zarejestrowano" : "Zalogowano";
             toastHelper.success(`${actionName} pomyślnie!`);
             return navigate("/");
@@ -63,7 +76,16 @@ export function LoginComponent() {
                         <TextInput id="password1" type="password" required value={password}
                                    onChange={(e) => setPassword(e.target.value)}/>
                     </div>
-                    <Button outline gradientDuoTone="greenToBlue" type="submit">Submit</Button>
+                    {isRegistering ?
+                        (<><Dropdown label="Wybierz spółdzielnie" >
+                            {allEstates?.map((estate) => (
+                                <Dropdown.Item key={estate.id} onClick={() => setEstate(estate)}>{estate.name}</Dropdown.Item>
+                            ))}
+                        </Dropdown>
+                        {estate == null ? (<>Wybierz spółdzielnie</>) : (<>Wybrano spółdzielnie: {estate.name}</>)} </>) : null
+                    }
+                    <Button outline gradientDuoTone="greenToBlue" type="submit">{isRegistering ? (<>Zarejestruj się</>) : (<>Zaloguj się</>)}</Button>
+
                 </form>
             </Card>
         </div>

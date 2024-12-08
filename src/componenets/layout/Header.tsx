@@ -39,14 +39,17 @@ function Header(): JSX.Element {
           <NavbarLink
               href="/logout"
               active={location.pathname === "/logout"}
-          >Wyloguj się
-          </NavbarLink>
+          >Wyloguj się</NavbarLink>
          ) : (
           <NavbarLink
               href="/login"
               active={location.pathname === "/login"}
-          > Login </NavbarLink>
+          >Login</NavbarLink>
           )}
+          <NavbarLink
+              href="/my_page"
+              active={location.pathname === "/my_page"}
+          >Moja strona</NavbarLink>
       </NavbarCollapse>
     </Navbar>
   );

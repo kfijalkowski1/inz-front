@@ -7,6 +7,8 @@ import Home from "./componenets/home/HomePage.tsx";
 import {LogoutComponent} from "./componenets/register_login/LogoutComponent.tsx";
 import Post from "./componenets/posts/Post.tsx";
 import EditPost from "./componenets/posts/EditPost.tsx";
+import MyPage from "./componenets/userPage/MyPage.tsx";
+import {AdminOverview} from "./componenets/estateAdmin/adminOverview.tsx";
 
 
 const router = createBrowserRouter([
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
 			{
 				path: "logout",
 				element: <LogoutComponent/>,
+			},
+			{
+				path: "my_page",
+				element: <MyPage/>,
+			},
+			{
+				path: "admin",
+				element: <AdminOverview/>,
 			}
 		]
 	},

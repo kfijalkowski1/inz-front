@@ -1,4 +1,5 @@
 import {API_ADDR} from "../utils/consts.ts";
+import {EstateType, UserType} from "../../types.tsx";
 
 export const loginUser = async (username: string, password: string) => {
     const requestOptions = {
@@ -25,7 +26,7 @@ export const loginUser = async (username: string, password: string) => {
 };
 
 export const register =
-    async (name: string, surname: string, username: string, password: string) => {
+    async (name: string, surname: string, username: string, password: string, estate: EstateType) => {
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json", "accept": "application/json" },
@@ -34,6 +35,7 @@ export const register =
             surname: surname,
             username: username,
             password: password,
+            estate_id: estate.id,
         }),
     }
     const response = await fetch(`${API_ADDR}security/users/add`, requestOptions);
@@ -62,7 +64,7 @@ export function logoutUser(): void {
     localStorage.removeItem("accessToken");
 }
 
-export async function getUserId(): Promise<string> {
+export async function getUserData(): Promise<UserType> {
     const fetchOptions = {
         method: "GET",
         headers: {
@@ -74,6 +76,32 @@ export async function getUserId(): Promise<string> {
     if (!response.ok) {
         throw new Error("HTTP error " + response.status);
     }
-    const data = await response.json();
+    return await response.json();
+}
+
+
+export async function getUserId(): Promise<string> {
+    const data = await getUserData();
     return data.id;
+}
+
+
+export async function getAllEstates(): Promise<EstateType[]> {
+    const fetchOptions = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    };
+    const response = await fetch(`${API_ADDR}estates`, fetchOptions);
+    if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+    }
+    return await response.json();
+}
+
+
+export async function isUserAdmin(): Promise<boolean> {
+    const data = await getUserData();
+    return data.role === "administrator";
 }

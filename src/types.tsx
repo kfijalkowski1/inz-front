@@ -8,3 +8,21 @@ export type CardType = {
     author_name: string;
     author_id: string;
 }
+
+// User
+export type UserType = {
+    name: string;
+    surname: string;
+    username: string;
+    estate_name: string;
+    role: string;
+    id: string;
+}
+
+
+// Estate
+export type EstateType = {
+    id: string;
+    name: string;
+    description: string;
+}
