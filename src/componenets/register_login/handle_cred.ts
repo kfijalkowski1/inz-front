@@ -1,5 +1,5 @@
 import {API_ADDR} from "../utils/consts.ts";
-import {EstateType, UserType} from "../../types.tsx";
+import {EstateType, Role, UserType} from "../../types.tsx";
 
 export const loginUser = async (username: string, password: string) => {
     const requestOptions = {
@@ -26,7 +26,7 @@ export const loginUser = async (username: string, password: string) => {
 };
 
 export const register =
-    async (name: string, surname: string, username: string, password: string, estate: EstateType) => {
+    async (name: string, surname: string, username: string, password: string, estateId: string) => {
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json", "accept": "application/json" },
@@ -35,7 +35,7 @@ export const register =
             surname: surname,
             username: username,
             password: password,
-            estate_id: estate.id,
+            estate_id: estateId,
         }),
     }
     const response = await fetch(`${API_ADDR}security/users/add`, requestOptions);
@@ -101,7 +101,16 @@ export async function getAllEstates(): Promise<EstateType[]> {
 }
 
 
-export async function isUserAdmin(): Promise<boolean> {
+export async function getUserRole(): Promise<Role> {
     const data = await getUserData();
-    return data.role === "administrator";
+    switch (data.role) {
+        case Role.ADMIN.valueOf():
+            return Role.ADMIN;
+        case Role.USER.valueOf():
+            return Role.USER;
+        case Role.WORKER.valueOf():
+            return Role.WORKER;
+        default:
+            throw new Error("Invalid role");
+    }
 }

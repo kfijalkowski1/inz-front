@@ -1,5 +1,5 @@
 
-import {Button, Card, Dropdown, Label, TextInput, ToggleSwitch} from "flowbite-react";
+import {Button, Card, Label, Select, TextInput, ToggleSwitch} from "flowbite-react";
 import {useEffect, useState} from "react";
 import {register, loginUser, getAllEstates} from "./handle_cred.ts";
 import toastHelper from "../utils/toastHelper.tsx";
@@ -15,7 +15,7 @@ export function LoginComponent() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [allEstates, setAllEstates] = useState<EstateType[]>();
-    const [estate, setEstate] = useState<EstateType>();
+    const [estateId, setEstate] = useState<string>();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,12 +26,8 @@ export function LoginComponent() {
 
     async function submitFunc(event: React.FormEvent): Promise<void> {
         event.preventDefault();
-        if (estate == null && isRegistering) {
-            toastHelper.error("Wybierz spółdzielnie");
-            return;
-        }
         try {
-            isRegistering ? await register(name, surname, login, password, estate!) : await loginUser(login, password);
+            isRegistering ? await register(name, surname, login, password, estateId!) : await loginUser(login, password);
             const actionName = isRegistering ? "Zarejestrowano" : "Zalogowano";
             toastHelper.success(`${actionName} pomyślnie!`);
             return navigate("/");
@@ -77,12 +73,19 @@ export function LoginComponent() {
                                    onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                     {isRegistering ?
-                        (<><Dropdown label="Wybierz spółdzielnie" >
-                            {allEstates?.map((estate) => (
-                                <Dropdown.Item key={estate.id} onClick={() => setEstate(estate)}>{estate.name}</Dropdown.Item>
-                            ))}
-                        </Dropdown>
-                        {estate == null ? (<>Wybierz spółdzielnie</>) : (<>Wybrano spółdzielnie: {estate.name}</>)} </>) : null
+                        (
+                        <div className="max-w-md">
+                            <div className="mb-2 block">
+                                <Label htmlFor="workerType" value="Wybierz typ pracownika"/>
+                            </div>
+                            <Select id="workerType"
+                                    required
+                                    onChange={(e) => setEstate(e.target.value)}>
+                                {allEstates?.map((estate) => (
+                                    <option key={estate.id} value={estate.name}>{estate.name}</option>
+                                ))}
+                            </Select>
+                        </div>) : null
                     }
                     <Button outline gradientDuoTone="greenToBlue" type="submit">{isRegistering ? (<>Zarejestruj się</>) : (<>Zaloguj się</>)}</Button>
 

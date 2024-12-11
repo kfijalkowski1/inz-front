@@ -26,3 +26,18 @@ export type EstateType = {
     name: string;
     description: string;
 }
+
+
+export enum Role {
+    ADMIN = "administrator",
+    USER = "mieszkaniec",
+    WORKER = "pracownik",
+}
+
+// Workers
+export type ManagerType = {
+    id: string;
+    name: string;
+    surname: string;
+    username: string;
+}

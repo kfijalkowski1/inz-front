@@ -9,6 +9,7 @@ import Post from "./componenets/posts/Post.tsx";
 import EditPost from "./componenets/posts/EditPost.tsx";
 import MyPage from "./componenets/userPage/MyPage.tsx";
 import {AdminOverview} from "./componenets/estateAdmin/adminOverview.tsx";
+import {AddWorker} from "./componenets/estateAdmin/addWorker.tsx";
 
 
 const router = createBrowserRouter([
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
 			{
 				path: "admin",
 				element: <AdminOverview/>,
+			},
+			{
+				path: "admin/add_worker",
+				element: <AddWorker/>
 			}
 		]
 	},

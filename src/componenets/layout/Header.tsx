@@ -1,17 +1,26 @@
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'flowbite-react';
 import HouseIcon from "../utils/icons/HouseIcon.tsx";
 import {useLocation} from "react-router-dom";
-import {isUserLoggedIn} from "../register_login/handle_cred.ts";
+import {getUserRole, isUserLoggedIn} from "../register_login/handle_cred.ts";
 import {useEffect, useState} from "react";
+import {Role} from "../../types.tsx";
 
 function Header(): JSX.Element {
   const location = useLocation();
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
+  const [userRole, setUserRole] = useState<Role>();
+
     useEffect(() => {
-        isUserLoggedIn().then((value) => {
-            setUserLoggedIn(value);
+        getUserRole().then((value) => {
+            setUserRole(value);
         });
     }, []);
+
+  useEffect(() => {
+      isUserLoggedIn().then((value) => {
+          setUserLoggedIn(value);
+      });
+  }, []);
 
   return (
     <Navbar fluid rounded color="cyan">
@@ -50,6 +59,12 @@ function Header(): JSX.Element {
               href="/my_page"
               active={location.pathname === "/my_page"}
           >Moja strona</NavbarLink>
+            {userRole === Role.ADMIN ? (
+                <NavbarLink
+                    href="/admin"
+                    active={location.pathname === "/admin"}
+                >Panel administracyjny</NavbarLink>
+            ) : null}
       </NavbarCollapse>
     </Navbar>
   );
