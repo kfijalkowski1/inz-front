@@ -1,14 +1,12 @@
 import {useEffect, useState} from "react";
-import {Button, Card, Label, Select, TextInput, ToggleSwitch} from "flowbite-react";
+import {Button, Card, Label, Select, ToggleSwitch} from "flowbite-react";
 import toastHelper from "../utils/toastHelper.tsx";
-import {addWorker, getManagers, getWorkerTypes} from "./fetches.ts";
-import {ManagerType} from "../../types.tsx";
+import {addWorker, getManagers, getUsers, getWorkerTypes} from "./fetches.ts";
+import {ManagerType, UserType} from "../../types.tsx";
 
 export function AddWorker() {
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [login, setLogin] = useState("");
-    const [password, setPassword] = useState("");
+    const [users, setUsers] = useState<UserType[]>([]);
+    const [chosenUserId, setChosenUserId] = useState<string>("");
     const [chosenType, setChosenType] = useState<string>("");
     const [managerId, setManagerId] = useState<string>("");
     const [managers, setManagers] = useState<ManagerType[]>([]);
@@ -23,20 +21,21 @@ export function AddWorker() {
         getManagers().then((value) => {
             setManagers(value);
         });
+
+        getUsers().then((value) => {
+            setUsers(value);
+        });
+
     }, []);
 
 
     async function submitFunc(event: React.FormEvent): Promise<void> {
         event.preventDefault();
         try {
-            await addWorker(name, surname, login, password, chosenType, managerId, isManager);
+            await addWorker(chosenUserId, chosenType, managerId, isManager);
             toastHelper.success(`Dodano pracownika pomyślnie!`);
-            setName("");
-            setSurname("");
-            setLogin("");
-            setPassword("");
-            setManagerId("");
-            setIsManager(false)
+            setIsManager(false);
+            window.location.reload();
         } catch (error: any) {
             toastHelper.error('Nie udało się dodać pracownika');
         }
@@ -47,44 +46,25 @@ export function AddWorker() {
         <div className="flex justify-center items-center h-screen">
         <Card className="md:w-1/2 w-10/12">
             <form className="flex flex-col gap-4" onSubmit={submitFunc}>
-                <div>
+                <div className="max-w-md">
                     <div className="mb-2 block">
-                        <Label htmlFor="name" value="Imię"/>
+                        <Label htmlFor="users" value="Wybierz użytkownika z którego chcesz zrobić pracownika"/>
                     </div>
-                    <TextInput id="name" type="text" placeholder="Jacek"
-                               required value={name}
-                               onChange={(e) => setName(e.target.value)}/>
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="surname" value="Nazwisko"/>
-                    </div>
-                    <TextInput id="surname" type="text" placeholder="Kowalski"
-                               required value={surname}
-                               onChange={(e) => setSurname(e.target.value)}/>
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="login" value="Nazwa użytkownika"/>
-                    </div>
-                    <TextInput id="login" type="text" placeholder="Jacek123" value={login}
-                               onChange={(e) => setLogin(e.target.value)}/>
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="password1" value="Hasło"/>
-                    </div>
-                    <TextInput id="password1" type="password" required value={password}
-                               onChange={(e) => setPassword(e.target.value)}/>
+                    <Select id="users" onChange={(e) => setChosenUserId(e.target.value)}>
+                        <option key={""}>Brak</option>
+                        {users.map((user) => (
+                            <option key={user.id} value={user.id}>{user.name}, {user.surname} ({user.username})</option>
+                        ))}
+                    </Select>
                 </div>
                 <div className="max-w-md">
                     <div className="mb-2 block">
                         <Label htmlFor="manager" value="Wybierz przełożonego"/>
                     </div>
                     <Select id="manager" onChange={(e) => setManagerId(e.target.value)}>
-                        <option key={""} value={managerId}>Brak</option>
+                        <option key={""} value={""}>Brak</option>
                         {managers.map((manager) => (
-                            <option key={manager.id} value={managerId}>{manager.name} {manager.surname}</option>
+                            <option key={manager.id} value={manager.id}>{manager.name} {manager.surname}, ({manager.username})</option>
                         ))}
                     </Select>
                 </div>

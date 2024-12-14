@@ -41,3 +41,14 @@ export type ManagerType = {
     surname: string;
     username: string;
 }
+
+export type WorkerType = {
+    id: string;
+    name: string;
+    surname: string;
+    username: string;
+    type: string;
+    manager_name: string;
+    manager_surname: string;
+    is_manager: boolean;
+}

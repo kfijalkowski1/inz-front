@@ -15,7 +15,7 @@ export function LoginComponent() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [allEstates, setAllEstates] = useState<EstateType[]>();
-    const [estateId, setEstate] = useState<string>();
+    const [estateId, setEstateId] = useState<string>();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,6 +26,9 @@ export function LoginComponent() {
 
     async function submitFunc(event: React.FormEvent): Promise<void> {
         event.preventDefault();
+        if (estateId == "") {
+            return toastHelper.error("Wybierz spółdzielnie");
+        }
         try {
             isRegistering ? await register(name, surname, login, password, estateId!) : await loginUser(login, password);
             const actionName = isRegistering ? "Zarejestrowano" : "Zalogowano";
@@ -76,13 +79,14 @@ export function LoginComponent() {
                         (
                         <div className="max-w-md">
                             <div className="mb-2 block">
-                                <Label htmlFor="workerType" value="Wybierz typ pracownika"/>
+                                <Label htmlFor="estateName" value="Wybierz spółdzielnie"/>
                             </div>
-                            <Select id="workerType"
+                            <Select id="estateName"
                                     required
-                                    onChange={(e) => setEstate(e.target.value)}>
+                                    onChange={(e) => setEstateId(e.target.value)}>
+                                <option key={""}>Wybierz spółdzielnie</option>
                                 {allEstates?.map((estate) => (
-                                    <option key={estate.id} value={estate.name}>{estate.name}</option>
+                                    <option key={estate.id} value={estate.id}>{estate.name}</option>
                                 ))}
                             </Select>
                         </div>) : null

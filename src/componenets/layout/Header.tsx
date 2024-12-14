@@ -14,13 +14,13 @@ function Header(): JSX.Element {
         getUserRole().then((value) => {
             setUserRole(value);
         });
-    }, []);
+    }, [location.pathname]);
 
   useEffect(() => {
       isUserLoggedIn().then((value) => {
           setUserLoggedIn(value);
       });
-  }, []);
+  }, [location.pathname]);
 
   return (
     <Navbar fluid rounded color="cyan">
