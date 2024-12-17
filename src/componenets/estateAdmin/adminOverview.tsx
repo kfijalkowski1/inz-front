@@ -15,11 +15,6 @@ export function AdminOverview() {
         });
     }, []);
 
-
-    const goToMainPage = () => {
-        return navigate(`/`);
-    }
-
     const goToViewWorkers = () => {
         return navigate(`/admin/workers_view`);
     }
@@ -33,13 +28,13 @@ export function AdminOverview() {
     }
 
     const goToManageTasks = () => {
-        return navigate(`/tasks`);
+        return navigate(`/requests`);
     }
 
     if (!userIsAdmin) {
         return (
             <div className="justify-center flex align-middle p-16">
-                <MyCallButton onClick={goToMainPage} text="Ta strona jest dla administracji, naciśnij aby wrócić na gówną stronę"></MyCallButton>
+                <MyCallButton onClick={goToManageTasks} text="Ta strona jest dla administracji, naciśnij aby wrócić na gówną stronę"></MyCallButton>
             </div>
         );
     }
@@ -53,7 +48,7 @@ export function AdminOverview() {
                 <MyCallButton onClick={goToViewWorkers} text="Przeglądaj pracowników"></MyCallButton>
                 <MyCallButton onClick={goToViewResidents} text="Przeglądaj mieszkańców"></MyCallButton>
                 <MyCallButton onClick={goToAddWorker} text="Dodaj pracownika"></MyCallButton>
-                <MyCallButton onClick={goToManageTasks} text="Zarządzaj zadaniami"></MyCallButton>
+                <MyCallButton onClick={goToManageTasks} text="Zarządzaj zgłoszeniami"></MyCallButton>
             </div>
 
         </div>

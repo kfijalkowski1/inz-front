@@ -24,7 +24,7 @@ function Header(): JSX.Element {
 
   return (
     <Navbar fluid rounded color="cyan">
-      <NavbarBrand href="#">
+      <NavbarBrand href="/requests">
         <HouseIcon />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Administracja osiedla
@@ -33,28 +33,17 @@ function Header(): JSX.Element {
       <NavbarToggle />
       <NavbarCollapse>
         <NavbarLink
-          href="/"
-          active={location.pathname === "/"}
-        >
-          Strona główna
-        </NavbarLink>
-        <NavbarLink
           href="/posts"
           active={location.pathname.startsWith("/posts")}
         >
           Ogłoszenia
         </NavbarLink>
-          {userLoggedIn ? (
           <NavbarLink
-              href="/logout"
-              active={location.pathname === "/logout"}
-          >Wyloguj się</NavbarLink>
-         ) : (
-          <NavbarLink
-              href="/login"
-              active={location.pathname === "/login"}
-          >Login</NavbarLink>
-          )}
+              href="/requests"
+              active={location.pathname.startsWith("/requests")}
+          >
+              Zgłoszenia
+          </NavbarLink>
           <NavbarLink
               href="/my_page"
               active={location.pathname === "/my_page"}
@@ -65,6 +54,17 @@ function Header(): JSX.Element {
                     active={location.pathname === "/admin"}
                 >Panel administracyjny</NavbarLink>
             ) : null}
+          {userLoggedIn ? (
+              <NavbarLink
+                  href="/logout"
+                  active={location.pathname === "/logout"}
+              >Wyloguj się</NavbarLink>
+          ) : (
+              <NavbarLink
+                  href="/login"
+                  active={location.pathname === "/login"}
+              >Login</NavbarLink>
+          )}
       </NavbarCollapse>
     </Navbar>
   );

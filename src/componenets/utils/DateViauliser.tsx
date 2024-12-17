@@ -2,6 +2,9 @@
 import CalendarIcon from "./icons/CalendarIcon.tsx";
 
 export function DateVisualiser({date}: {date: string}) {
+  if (!date) {
+    return "";
+  }
   let dateObj: Date = new Date(date);
   const dateStr: string = dateObj.toISOString().split('T')[0];
   return (

@@ -33,7 +33,7 @@ export function LoginComponent() {
             isRegistering ? await register(name, surname, login, password, estateId!) : await loginUser(login, password);
             const actionName = isRegistering ? "Zarejestrowano" : "Zalogowano";
             toastHelper.success(`${actionName} pomyślnie!`);
-            return navigate("/");
+            return navigate("/requests");
         } catch (error: any) {
             toastHelper.error(error.toString());
         }

@@ -12,7 +12,7 @@ export function LogoutComponent(): JSX.Element {
             try {
                 logoutUser();
                 toastHelper.success("Wylogowano pomyślnie!");
-                navigate("/"); // Redirect after successful logout
+                navigate("/requests"); // Redirect after successful logout
             } catch (error: any) {
                 toastHelper.error(error.toString());
             }

@@ -1,5 +1,6 @@
 import {API_ADDR} from "../utils/consts.ts";
 import {EstateType, Role, UserType} from "../../types.tsx";
+import {getSecureRequestOptions} from "../utils/requstsOptions.ts";
 
 export const loginUser = async (username: string, password: string) => {
     const requestOptions = {
@@ -113,4 +114,12 @@ export async function getUserRole(): Promise<Role> {
         default:
             throw new Error("Invalid role");
     }
+}
+
+export async function getUserNameSurname(userId: string) {
+    const response = await fetch(`${API_ADDR}security/user_name_surname/${userId}`, getSecureRequestOptions);
+    if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+    }
+    return await response.json();
 }

@@ -5,11 +5,11 @@ import {WorkerType} from "../../types.tsx";
 import {getWorkers} from "./fetches.ts";
 
 export function ViewWorkers() {
-    const [workers, setWrorkers] = useState<WorkerType[]>([]);
+    const [workers, setWorkers] = useState<WorkerType[]>([]);
 
     useEffect(() => {
         getWorkers().then((value) => {
-            setWrorkers(value);
+            setWorkers(value);
         });
     }, []);
 

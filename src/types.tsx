@@ -52,3 +52,17 @@ export type WorkerType = {
     manager_surname: string;
     is_manager: boolean;
 }
+
+// Requests
+export type RequestType = {
+    id: string;
+    author_id: string;
+    title: string;
+    description: string;
+    department: string;
+    status: string;
+    start_time: string;
+    end_time: string;
+    assignee_id: string;
+    visibility: string;
+}

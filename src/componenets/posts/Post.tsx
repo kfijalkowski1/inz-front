@@ -33,7 +33,8 @@ export default function Post() {
     if (!cardData) {
         return <Spinner aria-label="Loading post" />;
     }
-    return (<div className="h-screen flex items-center justify-center" key={cardData?.id}>
+    return (
+    <div className="h-screen flex items-center justify-center" key={cardData?.id}>
         <div className="w-2/3 align-center justify-center flex">
             <SingleCard {...cardData!} />
         </div>
