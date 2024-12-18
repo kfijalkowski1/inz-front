@@ -73,7 +73,7 @@ export async function getUserData(): Promise<UserType> {
             "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
         }
     }
-    const response = await fetch(`${API_ADDR}security/users/me`, fetchOptions);
+    const response = await fetch(`${API_ADDR}security/users/me/`, fetchOptions);
     if (!response.ok) {
         throw new Error("HTTP error " + response.status);
     }
