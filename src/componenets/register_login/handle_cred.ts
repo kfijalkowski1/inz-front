@@ -56,7 +56,7 @@ export const isUserLoggedIn= async(): Promise<boolean> => {
         await getUserId();
         return true;
     } catch (error) {
-        localStorage.removeItem("accessToken"); // remove invalid token
+        // localStorage.removeItem("accessToken"); remove invalid token TODO check if needed, doesn't work on prod
         return false;
     }
 }
