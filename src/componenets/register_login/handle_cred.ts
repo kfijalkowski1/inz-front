@@ -68,6 +68,7 @@ export function logoutUser(): void {
 export async function getUserData(): Promise<UserType> {
     const fetchOptions = {
         method: "GET",
+        mode: "no-cors",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
