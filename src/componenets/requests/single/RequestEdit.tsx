@@ -55,10 +55,10 @@ export function RequestEdit(props: { request: RequestType }) {
 
     return <div className="space-y-4 ml-20">
         <p className="font-normal text-gray-700 dark:text-gray-400">
-            Czas zgłoszenia: <DateVisualiser date={props.request?.start_time!}/>
+            Czas zgłoszenia: <DateVisualiser date={props.request?.start_time!} full={true}/>
         </p>
         <p className="font-normal text-gray-700 dark:text-gray-400">
-            Czas zakończenia: <DateVisualiser date={props.request?.end_time!}/>
+            Czas zakończenia: <DateVisualiser date={props.request?.end_time!} full={true}/>
         </p>
         <form className="flex flex-col gap-4" onSubmit={submitFunc}>
             <div className="max-w-md">

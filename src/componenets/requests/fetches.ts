@@ -1,4 +1,4 @@
-import {RequestType, WorkerType} from "../../types.tsx";
+import {CommentType, RequestType, WorkerType} from "../../types.tsx";
 import {API_ADDR} from "../utils/consts.ts";
 import {getSecureRequestOptions} from "../utils/requstsOptions.ts";
 
@@ -110,3 +110,33 @@ export const updateRequest = async (request_id: string, department: string, stat
 
 }
 
+export const addNewComment = async (request_id: string, content: string): Promise<void> => {
+    const response: Response = await fetch(`${API_ADDR}comments/add_request`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({
+            request_id: request_id,
+            content: content,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error('HTTP error ' + response.status);
+    }
+
+    return await response.json();
+};
+
+
+export const getComments = async (request_id: string): Promise<CommentType[]> => {
+    const response = await fetch(`${API_ADDR}comments_request/${request_id}`, getSecureRequestOptions);
+
+    if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+    }
+
+    return await response.json();
+};

@@ -75,6 +75,7 @@ export async function getUserData(): Promise<UserType> {
     }
     const response = await fetch(`${API_ADDR}security/users/me/`, fetchOptions);
     if (!response.ok) {
+        localStorage.removeItem("accessToken");
         throw new Error("HTTP error " + response.status);
     }
     return await response.json();

@@ -14,7 +14,7 @@ export function SingleCard({id, title, description, created_at, author_name} : C
           <p className="font-normal text-gray-700 dark:text-gray-400">
               {description}
           </p>
-          <DateVisualiser date={created_at}/>
+          <DateVisualiser date={created_at} full={false}/>
       </Card>
   );
 }

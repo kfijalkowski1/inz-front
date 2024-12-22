@@ -7,6 +7,8 @@ import { Spinner } from "flowbite-react";
 import {getUserNameSurname, getUserRole} from "../../register_login/handle_cred.ts";
 import {RequestInfo} from "./RequestInfo.tsx";
 import {RequestEdit} from "./RequestEdit.tsx";
+import {AddComment} from "../comments/AddComment.tsx";
+import {AllComments} from "../comments/AllComments.tsx";
 
 function EditableView(props: { request: RequestType, authorName: string }) {
     return <div className="p-12 grid grid-cols-2 gap-4 flex justify-center">
@@ -56,9 +58,19 @@ export function ViewRequest() {
         return <Spinner />;
     }
 
-    return ( isEmploye ?
-            <EditableView request={request} authorName={authorName}/> :
-            <UserView request={request} authorName={authorName}/>
+    return (
+        <div>
+            {isEmploye ? (
+                <EditableView request={request} authorName={authorName} />
+            ) : (
+                <UserView request={request} authorName={authorName} />
+            )}
+            <div className="">
+                <AllComments request_id={request.id} />
+                <AddComment request_id={request.id} />
+            </div>
 
+        </div>
     );
+
 }

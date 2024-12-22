@@ -66,3 +66,13 @@ export type RequestType = {
     assignee_id: string;
     visibility: string;
 }
+
+// Comments
+export type CommentType = {
+    id: string,
+    author_name: string,
+    author_surname: string,
+    content: string,
+    created_at: string,
+    author_type: string
+}
