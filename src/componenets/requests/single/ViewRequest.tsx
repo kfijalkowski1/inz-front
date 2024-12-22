@@ -11,7 +11,7 @@ import {AddComment} from "../comments/AddComment.tsx";
 import {AllComments} from "../comments/AllComments.tsx";
 
 function EditableView(props: { request: RequestType, authorName: string }) {
-    return <div className="p-12 grid grid-cols-2 gap-4 flex justify-center">
+    return <div className="p-12 grid grid-cols-1 md:grid-cols-2 gap-16 justify-center">
         <RequestInfo request={props.request} authorName={props.authorName}/>
         <RequestEdit request={props.request}/>
     </div>;

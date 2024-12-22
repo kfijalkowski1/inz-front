@@ -25,11 +25,11 @@ export function AddComment(props: {request_id: string}) {
             return;
         }
         toastHelper.success("Komentarz dodany pomyślnie!");
-        onCloseModal();
+        window.location.reload();
     }
 
     return (
-        <>
+        <div className="px-6 py-2">
             <MyCallButton onClick={() => setOpenModal(true)} text={"Dodaj komentarz"} />
             <Modal show={openModal} size="md" onClose={onCloseModal} popup>
                 <Modal.Header />
@@ -53,6 +53,6 @@ export function AddComment(props: {request_id: string}) {
                     </form>
                 </Modal.Body>
             </Modal>
-        </>
+        </div>
     );
 }

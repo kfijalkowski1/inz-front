@@ -53,7 +53,10 @@ export function RequestEdit(props: { request: RequestType }) {
     }, [chosenDepartment]);
 
 
-    return <div className="space-y-4 ml-20">
+    return <div className="space-y-4">
+        <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+            Edytuj zgłoszenie
+        </h1>
         <p className="font-normal text-gray-700 dark:text-gray-400">
             Czas zgłoszenia: <DateVisualiser date={props.request?.start_time!} full={true}/>
         </p>
